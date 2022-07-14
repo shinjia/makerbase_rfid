@@ -1,3 +1,6 @@
 96ABC1F7,Wayne
-7340341C,Vincent Chen
+7340341C,Shinjia Chen
+B76E3685,Bruce
+C1234567,Candy
+D4F514C5,David
 C3223D1C,Admin
