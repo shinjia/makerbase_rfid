@@ -41,7 +41,7 @@ print(dict)
 while(True):
     if(ser.inWaiting()>0):
         # Part1: 得到 RFID 的 Tag
-        data_str = ser.read(ser.inWaiting()).decode('ascii') 
+        data_str = ser.readline(ser.inWaiting()).decode('ascii') 
         rfid_code = data_str.strip()
 
         # Part2: 比對內容
