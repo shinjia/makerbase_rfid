@@ -25,7 +25,8 @@ MQTT_SERVER           = "mqttgo.io"
 #MQTT_USER             = "my_name"
 #MQTT_PWD              = "my_password"
 MQTT_LOOP_Interval    = 0.05                  
-MQTT_TOPIC_Monitor    = "MakerBase/user00/FaceID"
+MQTT_TOPIC_Face       = "MakerBase/shinjia/FaceID"
+MQTT_TOPIC_Tag        = "MakerBase/shinjia/TagID"
 
 
 # The callback for when the client receives a CONNACK response from the server.
@@ -33,11 +34,11 @@ def on_connect(client, userdata, flags, rc):
     print("Connected with result code "+str(rc))
  
     # Subscribing in on_connect() means that if we lose the connection and reconnect then subscriptions will be renewed.
-    client.subscribe(MQTT_TOPIC_Monitor)
+    client.subscribe(MQTT_TOPIC_Face)
 
 # The callback for when a PUBLISH message is received from the server.
 def on_message(client, userdata, msg):
-    if (msg.topic == MQTT_TOPIC_Monitor):
+    if (msg.topic == MQTT_TOPIC_Face):
         mp = msg.payload.decode('ascii')
         print("TagID ==> TOPIC: [" + msg.topic + "], MESSAGE: " + mp + "]")
 
@@ -89,6 +90,8 @@ while True:
         # Part1: 得到 RFID 的 Tag
         data_str = ser.read(ser.inWaiting()).decode('ascii') 
         rfid_code = data_str.strip()
+        # 同時 Mqtt pub
+        client.publish(MQTT_TOPIC_Tag, rfid_code)
 
         # Part2: 比對內容
         msg = "(x)"
